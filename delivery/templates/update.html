@@ -1,0 +1,55 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<style>
+    /* Mimic Bootstrap 5 form-control for Django rendered forms */
+    .django-form p { margin-bottom: 1.25rem; }
+    .django-form label { font-weight: 600; margin-bottom: 0.5rem; display: inline-block; color: #495057; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;}
+    .django-form input, .django-form select, .django-form textarea { 
+        display: block; width: 100%; padding: 0.75rem 1rem; 
+        font-size: 1rem; font-weight: 400; line-height: 1.5; 
+        color: #212529; background-color: #f8f9fa; background-clip: padding-box; 
+        border: 1px solid #dee2e6; border-radius: 0.5rem; transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out; 
+    }
+    .django-form input:focus, .django-form textarea:focus {
+        background-color: #fff;
+        border-color: #86b7fe;
+        outline: 0;
+        box-shadow: 0 0 0 0.25rem rgba(13,110,253,.25);
+    }
+    .django-form ul.errorlist { color: #dc3545; list-style-type: none; padding-left: 0; margin-top: 0.5rem; font-size: 0.875rem; }
+</style>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="card-header bg-primary text-white py-4 text-center">
+                    <h3 class="mb-0 fw-bold"><i class="fa-solid fa-location-dot me-2 text-warning"></i>Update Address</h3>
+                    <p class="mb-0 text-white-50 small mt-1">Modify your existing delivery details</p>
+                </div>
+                
+                <div class="card-body p-4 p-md-5">
+                    
+                    <form action="" method="POST" class="django-form">
+                        {% csrf_token %}
+                        {{form}}
+                        
+                        <div class="d-flex flex-column flex-sm-row gap-3 mt-5">
+                            <button type="submit" class="btn btn-warning btn-lg flex-grow-1 fw-bold rounded-pill shadow-sm text-dark">
+                                Save Changes <i class="fa-solid fa-floppy-disk ms-2"></i>
+                            </button>
+                            <a href="{% url 'delivery' %}" class="btn btn-outline-secondary btn-lg flex-grow-1 fw-bold rounded-pill">
+                                Cancel
+                            </a>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,76 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3 shadow-sm sticky-top">
+    <div class="container-fluid px-4">
+        <a class="navbar-brand fw-bold fs-3 text-white tracking-wide" href="{% url 'home' %}">
+            <i class="fa-solid fa-store text-warning me-2"></i>ShopSphere
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 align-items-lg-center">
+                <li class="nav-item">
+                    <a class="nav-link text-white hover-primary" href="{% url 'home' %}"><i class="fa-solid fa-house me-1"></i>Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white hover-primary" href="{% url 'about' %}"><i class="fa-solid fa-circle-info me-1"></i>Know Us</a>
+                </li>
+                
+                {% if not user.is_authenticated or not profile and not carts %}
+                <!-- Trendy / Offers Filters for unauthenticated or base users -->
+                <li class="nav-item ms-lg-2">
+                    <form action="" class="d-inline">
+                        <button type="submit" name="trending" class="btn btn-outline-warning btn-sm me-2 rounded-pill fw-bold"><i class="fa-solid fa-fire me-1"></i>Trending</button>
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <form action="" class="d-inline">
+                        <button type="submit" name="offer" class="btn btn-outline-danger btn-sm rounded-pill fw-bold"><i class="fa-solid fa-tags me-1"></i>Offers</button>
+                    </form>
+                </li>
+                {% endif %}
+            </ul>
+
+            <div class="d-flex flex-column flex-lg-row align-items-lg-center gap-3">
+                {% if not user.is_authenticated or not profile and not carts %}
+                <form class="d-flex" action="">
+                    <div class="input-group">
+                        <input class="form-control rounded-start-pill border-0 px-3" type="search" name="q" placeholder="Search products..." aria-label="Search">
+                        <button class="btn btn-warning rounded-end-pill px-4 text-dark fw-bold" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    </div>
+                </form>
+                {% endif %}
+
+                {% if user.is_authenticated %}
+                <div class="dropdown">
+                    <a class="btn btn-light rounded-pill px-4 dropdown-toggle fw-bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-user me-2 text-primary"></i>HI, {{ user.username|upper }}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end shadow border-0">
+                        <li><a class="dropdown-item" href="{% url 'profile' %}"><i class="fa-solid fa-id-card me-2 text-secondary"></i>Profile</a></li>
+                        <li><a class="dropdown-item" href="{% url 'orders' %}"><i class="fa-solid fa-box-open me-2 text-info"></i>My Orders</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="{% url 'logout_' %}"><i class="fa-solid fa-right-from-bracket me-2"></i>Logout</a></li>
+                    </ul>
+                </div>
+                
+                <a href="{% url 'cart' %}" class="btn btn-dark border border-secondary rounded-pill position-relative px-3 d-flex align-items-center">
+                    <i class="fa-solid fa-cart-shopping fs-5 text-warning"></i>
+                    {% if count_cart %}
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger border border-light">
+                        {{ count_cart }}
+                        <span class="visually-hidden">items in cart</span>
+                    </span>
+                    {% endif %}
+                </a>
+
+                {% else %}
+                <div class="d-flex gap-2">
+                    <a href="{% url 'login_' %}" class="btn btn-outline-light rounded-pill px-4 fw-bold">Login</a>
+                    <a href="{% url 'register_' %}" class="btn btn-warning rounded-pill px-4 fw-bold text-dark">Sign Up</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</nav>

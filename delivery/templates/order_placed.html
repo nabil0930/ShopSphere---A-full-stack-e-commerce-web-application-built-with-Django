@@ -1,0 +1,62 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="container py-5">
+    
+    <!-- Success Banner -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-md-8 text-center">
+            <div class="bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3 shadow" style="width: 120px; height: 120px;">
+                <i class="fa-solid fa-check fa-4x"></i>
+            </div>
+            <h1 class="display-5 fw-bolder text-success mb-3">Order Placed Successfully!</h1>
+            <p class="lead text-muted">Thank you for shopping with ShopSphere. Your items will be dispatched soon.</p>
+            <a href="{% url 'home' %}" class="btn btn-primary btn-lg rounded-pill px-5 shadow-sm mt-3"><i class="fa-solid fa-bag-shopping me-2"></i>Shop More</a>
+        </div>
+    </div>
+    
+    <hr class="w-75 mx-auto mb-5 text-muted">
+
+    <!-- Confirmed Orders List -->
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <h3 class="fw-bold mb-4 text-center"><i class="fa-solid fa-box-open me-2 text-primary"></i>Your Confirmed Orders</h3>
+            
+            <div class="row g-4">
+                {% for i in orders %}
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm rounded-4 h-100 border-top border-4 border-primary">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
+                                <span class="badge bg-primary rounded-pill">Order #{{ forloop.counter }}</span>
+                                <span class="text-muted small"><i class="fa-solid fa-user me-1"></i>{{i.username}}</span>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <h6 class="fw-bold text-secondary text-uppercase text-xs mb-1">Delivery Address</h6>
+                                <p class="mb-0 fw-semibold text-dark">{{i.customer_address}}</p>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <h6 class="fw-bold text-secondary text-uppercase text-xs mb-1">Contact Number</h6>
+                                <p class="mb-0"><i class="fa-solid fa-phone fa-sm text-muted me-2"></i>{{i.customer_mob}}</p>
+                            </div>
+                            
+                            <div class="d-flex gap-2">
+                                <a href="{% url 'update' i.id %}" class="btn btn-outline-primary btn-sm flex-grow-1 rounded-pill fw-bold"><i class="fa-solid fa-pen me-1"></i>Update</a>
+                                <a href="{% url 'ddelete' i.id %}" class="btn btn-outline-danger btn-sm flex-grow-1 rounded-pill fw-bold"><i class="fa-solid fa-trash-can me-1"></i>Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12 text-center py-4">
+                    <p class="text-muted">No confirmed orders found.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+ 
+</div>
+{% endblock content %}

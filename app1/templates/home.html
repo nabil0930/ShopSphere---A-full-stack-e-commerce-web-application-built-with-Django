@@ -1,0 +1,95 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    
+    <!-- Category Navigation -->
+    <div class="d-flex flex-wrap justify-content-center gap-2 mb-5">
+        {% for i in Category %}
+        <form action="" class="d-inline">
+            <button type="submit" value="{{i}}" name="cat" class="btn btn-outline-primary rounded-pill px-4 fw-bold shadow-sm">
+                {{i|title}}
+            </button>
+        </form>
+        {% endfor %}
+        <a href="{% url 'home' %}" class="btn btn-primary rounded-pill px-4 fw-bold shadow-sm">
+            <i class="fa-solid fa-layer-group me-2"></i>All Products
+        </a>
+    </div>
+
+    <!-- Products Grid -->
+    {% if products %}
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 pt-2">
+        {% for i in products %}
+        <div class="col">
+            <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden position-relative transition-hover">
+                
+                <!-- Badges -->
+                {% if trend %}
+                <span class="position-absolute top-0 end-0 m-3 badge bg-warning text-dark shadow-sm fs-6 rounded-pill z-1 px-3 py-2">
+                    <i class="fa-solid fa-fire text-danger me-1"></i>Trending
+                </span>
+                {% endif %}
+                
+                {% if offer %}
+                <span class="position-absolute top-0 start-0 m-3 badge bg-danger shadow-sm fs-6 rounded-pill z-1 px-3 py-2">
+                    <i class="fa-solid fa-tag me-1"></i>Flat 50% Off
+                </span>
+                {% endif %}
+
+                <!-- Product Image -->
+                <div class="ratio ratio-1x1 bg-light">
+                    {% if i.product_image %}
+                    <img src="{{ i.product_image.url }}" class="card-img-top object-fit-cover" alt="{{ i.product_name }}">
+                    {% else %}
+                    <div class="d-flex align-items-center justify-content-center text-muted">
+                        <i class="fa-solid fa-image fa-3x"></i>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Product Details -->
+                <div class="card-body d-flex flex-column p-4">
+                    <p class="text-uppercase text-primary fw-bold text-xs mb-1 letter-spacing-1">{{ i.product_category }}</p>
+                    <h5 class="card-title fw-bolder mb-2 text-dark">{{ i.product_name|title }}</h5>
+                    <p class="card-text text-muted small flex-grow-1">{{ i.product_desc|truncatechars:60 }}</p>
+                    
+                    <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+                        <span class="fs-4 fw-bolder text-success">₹{{ i.product_price }}</span>
+                        <a href="{% url 'addtocart' i.id %}" class="btn btn-dark rounded-circle p-3 shadow-sm cart-btn-hover" aria-label="Add to cart" title="Add to Cart">
+                            <i class="fa-solid fa-cart-plus"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% else %}
+    <!-- Empty State -->
+    <div class="text-center py-5 my-5">
+        <i class="fa-solid fa-magnifying-glass fa-4x text-muted mb-3 opacity-50"></i>
+        <h2 class="fw-bold text-dark mb-2">No matching products found</h2>
+        <p class="text-secondary mb-4">Try adjusting your filters or browsing all products.</p>
+        <a href="{% url 'home' %}" class="btn btn-primary btn-lg rounded-pill px-5 shadow-sm">Browse All</a>
+    </div>
+    {% endif %}
+
+</div>
+
+<style>
+    .transition-hover {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .transition-hover:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 1rem 3rem rgba(0,0,0,.15)!important;
+    }
+    .text-xs { font-size: 0.75rem; }
+    .letter-spacing-1 { letter-spacing: 1px; }
+    .cart-btn-hover { transition: all 0.2s; }
+    .cart-btn-hover:hover { background-color: #ffc107!important; color: #000!important; transform: scale(1.1); }
+</style>
+{% endblock content %}

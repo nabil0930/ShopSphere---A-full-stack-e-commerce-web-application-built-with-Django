@@ -1,0 +1,86 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            
+            <div class="text-center mb-4">
+                <i class="fa-solid fa-user-plus fa-4x text-success mb-3"></i>
+                <h2 class="fw-bold">Create Account</h2>
+                <p class="text-muted">Join ShopSphere for a premium shopping experience</p>
+            </div>
+
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="card-body p-5">
+
+                    {% if status %}
+                    <div class="alert alert-warning d-flex align-items-center" role="alert">
+                        <i class="fa-solid fa-circle-exclamation me-2"></i>
+                        <div>Username already exists. Please try a different one.</div>
+                    </div>
+                    {% endif %}
+
+                    {% if notmatch %}
+                    <div class="alert alert-danger d-flex align-items-center" role="alert">
+                        <i class="fa-solid fa-triangle-exclamation me-2"></i>
+                        <div>Passwords do not match.</div>
+                    </div>
+                    {% endif %}
+
+                    {% if weak %}
+                    <div class="alert alert-danger d-flex align-items-center" role="alert">
+                        <i class="fa-solid fa-shield-halved me-2"></i>
+                        <div>Weak password! It must be at least 8 characters and include digits and special characters.</div>
+                    </div>
+                    {% endif %}
+
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label for="First_name" class="form-label fw-bold text-secondary text-xs text-uppercase">First Name</label>
+                                <input type="text" name="first_name" id="First_name" class="form-control form-control-lg shadow-sm" placeholder="John" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="Last_name" class="form-label fw-bold text-secondary text-xs text-uppercase">Last Name</label>
+                                <input type="text" name="last_name" id="Last_name" class="form-control form-control-lg shadow-sm" placeholder="Doe" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label fw-bold text-secondary text-xs text-uppercase">Email Address</label>
+                            <input type="email" name="email" id="email" class="form-control form-control-lg shadow-sm" placeholder="john.doe@example.com" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="Username" class="form-label fw-bold text-secondary text-xs text-uppercase">Username</label>
+                            <input type="text" name="username" id="Username" class="form-control form-control-lg shadow-sm" placeholder="Choose a unique username" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="Password" class="form-label fw-bold text-secondary text-xs text-uppercase">Password</label>
+                            <input type="password" name="password" id="Password" class="form-control form-control-lg shadow-sm" placeholder="••••••••" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="confirmpassword" class="form-label fw-bold text-secondary text-xs text-uppercase">Confirm Password</label>
+                            <input type="password" name="confirmpassword" id="confirmpassword" class="form-control form-control-lg shadow-sm" placeholder="••••••••" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-success btn-lg w-100 fw-bold rounded-pill shadow-sm mb-4 py-3">
+                            Register Account <i class="fa-solid fa-check ms-2"></i>
+                        </button>
+                    </form>
+
+                    <p class="text-center text-muted mb-0 border-top pt-4">
+                        Already signed up? <a href="{% url 'login_' %}" class="fw-bold text-success text-decoration-none">Login here</a>
+                    </p>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+{% endblock content %}
