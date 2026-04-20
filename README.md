@@ -19,5 +19,5 @@ A full-stack e-commerce web application built with Django & Bootstrap 5.
 
 1. Clone the repo
    ```bash
-   git clone https://github.com/YOUR_USERNAME/ShopSphere.git
+   git clone https://github.com/nabil0930/ShopSphere---A-full-stack-e-commerce-web-application-built-with-Django.git
    cd ShopSphere
